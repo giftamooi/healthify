@@ -3,9 +3,9 @@
 Tugas Besar II3160 Teknologi Sistem Terintegrasi x II3140 Pengembangan Aplikasi Web dan Mobile
 Kelompok unayaha (K02)
 
-| Nama | NIM | Peran |
-|---|---|---|
-| Endda Tsa Azzahra Syaifur | 18224094 | Mobile Developer |
+| Nama                      | NIM      | Peran              |
+| ------------------------- | -------- | ------------------ |
+| Endda Tsa Azzahra Syaifur | 18224094 | Mobile Developer   |
 | Gifta Mooira Prasharnissa | 18224106 | Backend dan Bisnis |
 
 Healthify adalah layanan untuk mencatat obat rutin dan memperkirakan risiko kesehatan musiman dari data cuaca. Layanan ini mengambil prakiraan kelembaban dan curah hujan dari Open-Meteo, lalu menghitung skor risiko untuk 7 hari ke depan. Skor itu dibandingkan dengan sisa stok obat pengguna, supaya pengguna tahu apakah stoknya cukup untuk melewati periode yang rawan.
@@ -15,7 +15,6 @@ Catatan: di laporan Tugas 1 nama layanannya masih Healther, lalu kami ganti jadi
 - Base URL: `https://healthify.stei.site/api`
 - Dokumentasi (Swagger): `https://healthify.stei.site/api/docs`
 - OpenAPI: `https://healthify.stei.site/api/openapi.json`
-
 
 ## Arsitektur
 
@@ -35,11 +34,11 @@ Aplikasi mobile / kelompok lain
    Open-Meteo (prakiraan cuaca)
 ```
 
-| Kontainer | Isi | Batas resource |
-|---|---|---|
-| core-service | FastAPI, logika domain, auth, database SQLite | 256 MB, 0.5 CPU |
-| gateway | nginx 1.28, pintu masuk `/api` dan rate limit | 64 MB, 0.25 CPU |
-| tunnel | cloudflared, untuk akses publik | 128 MB, 0.25 CPU |
+| Kontainer    | Isi                                           | Batas resource   |
+| ------------ | --------------------------------------------- | ---------------- |
+| core-service | FastAPI, logika domain, auth, database SQLite | 256 MB, 0.5 CPU  |
+| gateway      | nginx 1.28, pintu masuk `/api` dan rate limit | 64 MB, 0.25 CPU  |
+| tunnel       | cloudflared, untuk akses publik               | 128 MB, 0.25 CPU |
 
 Ketiganya pakai `restart: unless-stopped`, jadi kalau STB mati lalu nyala lagi, service ikut jalan lagi.
 
@@ -51,15 +50,14 @@ Pembagian kode di `core-service/app` mengikuti bounded context dari Tugas 1:
 - `db.py`: tabel `users` dan `medicines`.
 - `main.py`: daftar endpoint.
 
-
 ## Autentikasi
 
 Ada dua cara, tergantung siapa yang memanggil.
 
-| Pemanggil | Cara | Header |
-|---|---|---|
+| Pemanggil         | Cara                                         | Header                          |
+| ----------------- | -------------------------------------------- | ------------------------------- |
 | Pengguna aplikasi | login dulu, dapat token JWT (berlaku 24 jam) | `Authorization: Bearer <token>` |
-| Kelompok lain | API key dari kami | `X-API-Key: <key>` |
+| Kelompok lain     | API key dari kami                            | `X-API-Key: <key>`              |
 
 ### Cara dapat API key
 
@@ -70,35 +68,33 @@ Kalau mau coba endpoint yang butuh login, pakai akun uji ini:
 - email: `demo@healthify.id`
 - password: `demo12345`
 
-
 ## Daftar Endpoint
 
-| Method | Path | Auth | Fungsi |
-|---|---|---|---|
-| GET | `/api/health` | - | cek service hidup |
-| POST | `/api/auth/register` | - | daftar akun |
-| POST | `/api/auth/login` | - | login, dapat token |
-| GET | `/api/profile` | JWT | lihat profil |
-| PUT | `/api/profile` | JWT | isi lokasi dan kerentanan |
-| GET | `/api/medicines` | JWT | daftar obat |
-| POST | `/api/medicines` | JWT | tambah obat |
-| DELETE | `/api/medicines/{id}` | JWT | hapus obat |
-| GET | `/api/readiness` | JWT | skor risiko + saran stok (fitur utama) |
-| GET | `/api/public/risk?lat=&lon=` | API key | skor risiko per lokasi, untuk kelompok lain |
+| Method | Path                         | Auth    | Fungsi                                      |
+| ------ | ---------------------------- | ------- | ------------------------------------------- |
+| GET    | `/api/health`                | -       | cek service hidup                           |
+| POST   | `/api/auth/register`         | -       | daftar akun                                 |
+| POST   | `/api/auth/login`            | -       | login, dapat token                          |
+| GET    | `/api/profile`               | JWT     | lihat profil                                |
+| PUT    | `/api/profile`               | JWT     | isi lokasi dan kerentanan                   |
+| GET    | `/api/medicines`             | JWT     | daftar obat                                 |
+| POST   | `/api/medicines`             | JWT     | tambah obat                                 |
+| DELETE | `/api/medicines/{id}`        | JWT     | hapus obat                                  |
+| GET    | `/api/readiness`             | JWT     | skor risiko + saran stok (fitur utama)      |
+| GET    | `/api/public/risk?lat=&lon=` | API key | skor risiko per lokasi, untuk kelompok lain |
 
 Kode status yang mungkin keluar:
 
-| Kode | Artinya |
-|---|---|
-| 200 / 201 | berhasil |
-| 400 | profil belum diisi (lokasi kosong) |
-| 401 | token atau API key salah / tidak ada |
-| 404 | data tidak ditemukan |
-| 409 | email sudah terdaftar |
-| 422 | format input salah |
-| 429 | terlalu banyak request, tunggu sebentar |
-| 503 | Open-Meteo sedang tidak bisa dihubungi |
-
+| Kode      | Artinya                                 |
+| --------- | --------------------------------------- |
+| 200 / 201 | berhasil                                |
+| 400       | profil belum diisi (lokasi kosong)      |
+| 401       | token atau API key salah / tidak ada    |
+| 404       | data tidak ditemukan                    |
+| 409       | email sudah terdaftar                   |
+| 422       | format input salah                      |
+| 429       | terlalu banyak request, tunggu sebentar |
+| 503       | Open-Meteo sedang tidak bisa dihubungi  |
 
 ## Contoh Request
 
@@ -111,7 +107,7 @@ curl -X POST https://healthify.stei.site/api/auth/login \
 ```
 
 ```json
-{"access_token": "eyJhbGciOi...", "token_type": "bearer"}
+{ "access_token": "eyJhbGciOi...", "token_type": "bearer" }
 ```
 
 Isi profil dan tambah obat (token dari login di atas):
@@ -168,7 +164,6 @@ curl "https://healthify.stei.site/api/public/risk?lat=-6.89&lon=107.61" \
 
 Contoh angka di atas diambil dari hasil tes kami untuk Bandung tanggal 22 November 2026, jadi hasilnya akan beda tergantung cuaca saat dipanggil.
 
-
 ## Cara Skor Dihitung
 
 1. Ambil prakiraan 7 hari dari Open-Meteo.
@@ -180,14 +175,13 @@ Contoh angka di atas diambil dari hasil tes kami untuk Bandung tanggal 22 Novemb
 
 Endpoint `/api/public/risk` memakai rumus yang sama tanpa pengali kerentanan, karena tidak ada data pengguna di sana.
 
-
 ## Menjalankan Sendiri
 
 Butuh Docker dan Docker Compose.
 
 ```bash
-git clone https://github.com/giftamooi/healthify_unayaha.git
-cd healthify_unayaha
+git clone https://github.com/giftamooi/healthify.git
+cd healthify
 cp .env.example .env
 ```
 
