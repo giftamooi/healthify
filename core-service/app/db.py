@@ -4,7 +4,7 @@ import sqlite3
 
 
 def _db_path() -> str:
-    return os.getenv("DB_PATH", "/data/healther.db")
+    return os.getenv("DB_PATH", "/data/Healthify.db")
 
 
 def init_db() -> None:

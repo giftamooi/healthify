@@ -1,4 +1,4 @@
-"""Logika inti Healther (subdomain core): skor risiko musiman + kesiapan stok.
+"""Logika inti Healthify (subdomain core): skor risiko musiman + kesiapan stok.
 
 Sengaja berupa fungsi murni (tanpa database/HTTP) supaya mudah diuji dan
 menjadi tempat aturan bisnis dari makalah DDD.

@@ -1,4 +1,4 @@
-"""Healther core service: semua endpoint ada di bawah prefix /api."""
+"""Healthify core service: semua endpoint ada di bawah prefix /api."""
 import json
 import sqlite3
 from contextlib import asynccontextmanager
@@ -27,7 +27,7 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(
-    title="Healther Core Service",
+    title="Healthify Core Service",
     version="0.1.0",
     description="Skor risiko musiman + kesiapan stok obat. Data uji saja, bukan diagnosis.",
     docs_url="/api/docs",
