@@ -1,7 +1,7 @@
 # Healthify
 
 Tugas Besar II3160 Teknologi Sistem Terintegrasi x II3140 Pengembangan Aplikasi Web dan Mobile
-Kelompok unayaha (K02)
+Kelompok Healthify (K02)
 
 | Nama                      | NIM      | Peran              |
 | ------------------------- | -------- | ------------------ |
